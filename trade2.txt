@@ -1,0 +1,13 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script2" , overlay=true)
+length = input(type = input.integer , defval = 20 , title = "length1" , minval = 2 , tooltip = "pishooooooo")
+colr = input(type = input.color , defval = color.yellow)
+src = input(type = input.source , defval = close)
+sum = 0.0
+for i=0 to length - 1 //moving average
+    sum := sum + src[i]
+ma = sum / length
+plot(ma , color= colr)

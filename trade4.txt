@@ -1,0 +1,13 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script4" , overlay=true)
+
+a = floor(bar_index / 2) == bar_index / 2
+// bgcolor(a ? color.silver : na)
+
+if a
+    label.new(bar_index , high ,"salam")
+// plot(highest)
+// plotshape(highest , style = shape.arrowdown ,location = location.abovebar, text=highest)

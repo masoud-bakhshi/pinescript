@@ -1,0 +1,27 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script6" , overlay=true)
+
+RSIsource = input(type= input.source , defval= close)
+RSIlength = input(type= input.integer , defval= 14)
+
+OverBought = input(type= input.float , defval= 70.0)
+OverSold = input(type= input.float , defval= 30.0)
+
+BullishEngulfing= close[1] < open[1] and close > open[1]
+BearishEngulfing= close[1] > open[1] and close < open[1]
+
+RSI= rsi(RSIsource , RSIlength)
+
+RSIOverBought= RSI > OverBought
+RSIOverSold= RSI < OverSold
+
+BuySignal= BullishEngulfing and (RSIOverSold or RSIOverSold[1])
+SellSignal= BearishEngulfing and (RSIOverBought or RSIOverBought[1])
+
+alertcondition(BuySignal or SellSignal , message= "trade signal")
+alertcondition(close > open , message= "trade signal fff")
+// plot(C)
+plotshape(BuySignal or SellSignal , style = shape.arrowdown ,location = location.abovebar)

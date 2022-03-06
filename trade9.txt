@@ -1,0 +1,17 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © MAsoud Bakhshi
+//@version=4
+study("script9" ,overlay = true)
+// if barstate.islast
+//     label.new(bar_index ,high , text = "close=" + "\n" + tostring(close)  )
+// text1 = close > open ? "bullish candle" : "bearish candle"
+// alertcondition(close > open or open > close , )
+// plot(close)
+if close > open 
+    alert("solusdt -- bullish")
+if close < open 
+    alert("solusdt -- bearish")    
+if security("BINANCE:BTCUSDT" ,"" , close) > security("BINANCE:BTCUSDT" ,"" , open)
+    alert("btcsolusdt -- bullish")
+if security("BINANCE:BTCUSDT" ,"" , close) < security("BINANCE:BTCUSDT" ,"" , open)
+    alert("btcsolusdt -- bearish")

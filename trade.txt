@@ -1,0 +1,36 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script1" , overlay=true)
+
+// a= close > open ? high : low
+
+///////////////////////////////////////////////////////////////////////////////
+
+a = open
+if close > open 
+    a := high
+else if open > close 
+    a := low
+else 
+    a := open
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// a = iff(close > open , high , low) 
+
+//////////////////////////////////////////////////////////////////////////////////
+
+// b= (close - open) / open > 0.05
+
+///////////////////////////////////////////////////////////////////////////////////
+
+c= close[1] > open[1] and (((close[1] - open[1] )<(close[2] - open[2])) and ((close[2] - open[2] )< (close[3] - open[3])))
+d= close[1] < open[1] and (((open[1] - close[1] )<(open[2] - close[2])) and ((open[2] - close[2] )< (open[3] - close[3])))
+
+plotshape(c , style = shape.arrowdown ,location = location.abovebar, text="sell spot")
+plotshape(d , style = shape.arrowup ,location = location.belowbar, text="buy spot")
+// plotshape(b , style = shape.arrowdown , text="my spot")
+
+// plot (a , title= "plot1" , color= color.green)

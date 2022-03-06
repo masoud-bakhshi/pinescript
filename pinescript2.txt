@@ -1,0 +1,43 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Masoud Bakhshi
+
+//@version=4
+strategy("startegy1", overlay=true)
+
+R= (time % 86400000)
+
+var h = 0.0
+var l = 0.0
+var B = 0.0
+
+if R == 14.5 * 60 *60*1000 or R == 16 * 60 *60*1000 or R == 20.5 * 60 *60*1000
+    h :=high
+    l :=low
+
+BuySignal= close > h and close[1] > h and close[2] > h and low[1] > h and low[0] > h    and (close[1] < h or close[2] < h or close[3] < h or low[2] < h or low[1] < h)
+SellSignal= close < l and close[1] < l and close[2] < l and high[1] < l and high[0] < l   and (close[1] > l or close[2] > l or close[3] > l or high[2] > l or high[1] > l)
+
+plot(l , color= color.red)
+plot(h)
+
+date1=timestamp(year= 2022 , month=1 , day=1)
+date2=timestamp(year= 2022 , month=2 , day=25)
+
+TimeIsOk1= time > date1 and time < date2 and R < 16 * 60 *60*1000 and R > 14.5 * 60 *60*1000           //6 - 7.30
+TimeIsOk2= time > date1 and time < date2 and R < 19.5 * 60 *60*1000 and R > 16 * 60 *60*1000           //7.30 - 11  
+TimeIsOk3= time > date1 and time < date2 and R < 23.5 * 60 *60*1000 and R > 20.5 * 60 *60*1000         //12 - 3
+
+TimeIsOk= time > date1 and time < date2 and (TimeIsOk1 or TimeIsOk2 or TimeIsOk3)
+
+var winTrade = 0.0
+var lossTrade = 0.0
+// if R == 14.5 * 60 *60*1000 or  R == 16 * 60 *60*1000 or  R == 20.5 * 60 *60*1000 
+if R == 14.5 * 60 *60*1000
+    winTrade := strategy.wintrades
+    lossTrade :=strategy.losstrades
+
+strategy.entry("Buy" , long= true, qty= 1 , when = BuySignal and TimeIsOk and (strategy.losstrades - lossTrade) <  3 and (strategy.wintrades - winTrade)  <  1  )
+strategy.exit("exitBuy", "Buy", profit = 5000, stop = h)
+
+strategy.entry("Sell" , long= false, qty= 1 , when = SellSignal and TimeIsOk and (strategy.losstrades - lossTrade) <  3 and (strategy.wintrades - winTrade)  <  1  )
+strategy.exit("exitSell", "Sell", profit = 5000, stop = l)

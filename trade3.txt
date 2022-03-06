@@ -1,0 +1,16 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script3" , overlay=true)
+
+H = highest(high , 10)
+plot(H)
+// len = input(type = input.integer , defval = 10 , title = "length1" , minval = 2 , tooltip = "pishooooooo")
+// highest = high
+// for i=1 to len
+//     if high[i] > highest 
+//         highest := high[i]
+
+// plot(highest)
+// plotshape(highest , style = shape.arrowdown ,location = location.abovebar, text=highest)

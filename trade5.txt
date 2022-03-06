@@ -1,0 +1,9 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script5" , overlay=true)
+
+C = security("BINANCE:BTCUSDT" , "1" , close)
+plot(C)
+// plotshape(highest , style = shape.arrowdown ,location = location.abovebar, text=highest)

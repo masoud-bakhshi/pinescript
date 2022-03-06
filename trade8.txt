@@ -1,0 +1,49 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+strategy("startegy1", overlay=true)
+
+SelSignal= close[1] > open[1] and (close - open)[2] >(close - open)[1] and (close - open)[3] >(close - open)[2] and abs(open - close) < (close - open)[1]
+BuySignal= close[1] < open[1] and (open - close)[2] >(open - close)[1] and (open - close)[3] >(open - close)[2] and abs(open - close) < (open - close)[1]
+
+// plotshape(SelSignal, color=color.red)
+plotshape(BuySignal, color=color.green , location= location.belowbar)
+
+// R= time % 86400000
+// // plot(R)
+// bgcolor(color= R == 0 ? color.blue : na)
+// r= time == time("D")
+// bgcolor(color=r ? color.blue : na)
+Y1= input(title= "Year1" ,type= input.integer, defval= 2021)
+M1= input(title="Mounth1" ,type= input.integer, defval= 11 ,minval = 1 , maxval=12)
+D1= input(title="Day1" ,type= input.integer, defval= 1 ,minval = 1 , maxval=31)
+
+Y2= input(title="Year2" ,type= input.integer, defval= 2022)
+M2= input(title="Mounth2" ,type= input.integer, defval= 5 ,minval = 1 , maxval=12)
+D2= input(title="Day2" ,type= input.integer, defval= 1,minval = 1 , maxval=31)
+
+// a=timestamp(year= Y1 , month=M1 , day=D1)
+// b=timestamp(year= Y2 , month=M2 , day=D2)
+// TimeIsOk= time > a and time < b
+TIO(X1 , X2 , X3 , X4 , X5 ,X6) =>
+    time > timestamp(X1 , X2 , X3) and time < timestamp(X4 , X5 ,X6) /////akharin line khoruji ast
+
+
+strategy.entry("Buy" , long= true, qty= 1 , when = BuySignal and TIO(Y1 , M1 , D1 ,Y2 , M2 , D2))
+strategy.exit("Buy"  , limit = strategy.position_avg_price * 1.01 , stop = strategy.position_avg_price * 0.995)
+// var takeProfit= 0.0
+// var stopLoss= 0.0
+
+// if BuySignal
+//     strategy.entry("Buy" , long= true, qty= 1)
+//     takeProfit := open[3]
+//     stopLoss := close + (close - open[2])
+// strategy.close(id= "Buy" , when= close >= takeProfit or close <= stopLoss)
+// strategy.exit(id= "Buy" , limit= takeProfit , stop= stopLoss)
+
+
+
+
+
+

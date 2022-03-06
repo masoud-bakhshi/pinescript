@@ -1,0 +1,48 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © Bahram_bahramian7
+
+//@version=4
+strategy("startegy1", overlay=true)
+d=0
+g=0
+R= (time % 86400000)
+
+if R ==  0
+    g := 1
+else
+    g := 0
+////////////////////////////////////////////// 
+g2=0
+if R == 16 * 60 * 60 * 1000 
+    g2 := 1
+else
+    g2 := 0
+// plot(d)
+//////////////////////////////////////////////////////////
+var h = 0.0
+var l = 0.0
+var B = 0.0
+if g == 1 or g2 == 1
+    h :=high
+    l :=low
+if close > h and close[1] > h and close[2] > h and low[1] > h and low[0] > h
+    B := 38000
+else
+    B := 37000
+var closeBuy = 0.0
+BuySignal= close > h and close[1] > h and close[2] > h and low[1] > h and low[0] > h    and (close[1] < h or close[2] < h or close[3] < h or low[2] < h or low[1] < h)
+SellSignal= close < l and close[1] < l and close[2] < l and high[1] < l and high[0] < l   and (close[1] > l or close[2] > l or close[3] > l or high[2] > l or high[1] > l)
+
+if BuySignal == true                                                                     
+    closeBuy := close 
+// if B == 1 
+//     label.new(bar_index , high ,"b")
+plot(l)
+plot(h , color= color.red)
+// // plotshape(B , style = shape.arrowdown ,location = location.abovebar, text="b")
+// plot(B , color= color.yellow)
+strategy.entry("Buy" , long= true, qty= 1 , when = BuySignal )
+strategy.exit("exitBuy", "Buy", profit = 5000, stop = h)
+
+strategy.entry("Sell" , long= false, qty= 1 , when = SellSignal )
+strategy.exit("exitSell", "Sell", profit = 5000, stop = l)

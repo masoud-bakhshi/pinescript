@@ -1,0 +1,11 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © distinctCloud5731
+
+//@version=4
+study("script7" , overlay=true , precision = 1)
+
+label.new(bar_index , high , tostring(bar_index))
+
+
+plot(close)
+// plotshape(BuySignal or SellSignal , style = shape.arrowdown ,location = location.abovebar)
